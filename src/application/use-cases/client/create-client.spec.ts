@@ -25,7 +25,7 @@ const clientMockFactory = (): Client => {
   const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
   const gender = faker.name.gender();
   const age = faker.datatype.number(60);
-  const city = faker.address.cityName();
+  const city = faker.address.city();
   return new Client(id, name, gender, age, city);
 };
 
@@ -46,7 +46,7 @@ describe("Create Client", () => {
     await sut.create(
       client.id,
       client.name,
-      client.genere,
+      client.gender,
       client.age,
       client.city
     );
@@ -54,7 +54,7 @@ describe("Create Client", () => {
     expect(createClientRepositorySpy).toHaveBeenCalledWith(
       client.id,
       client.name,
-      client.genere,
+      client.gender,
       client.age,
       client.city
     );

@@ -20,7 +20,7 @@ const clientMockFactory = (): Client => {
   const name = `${faker.name.firstName()} ${faker.name.lastName()}`;
   const gender = faker.name.gender();
   const age = faker.datatype.number(60);
-  const city = faker.address.cityName();
+  const city = faker.address.city();
   return new Client(id, name, gender, age, city);
 };
 
@@ -35,12 +35,13 @@ const sutFactory = () => {
 describe("Find Client by Name", () => {
   it("should throw Error if no client is found", async () => {
     const { sut, findClientByNameRepositoryMock } = sutFactory();
+    const clientMock = clientMockFactory();
     jest
       .spyOn(findClientByNameRepositoryMock, "findByName")
       .mockResolvedValue(null);
     const error = new Error("Client not found");
     await expect(() => {
-      return sut.findByName("John Due");
+      return sut.findByName(clientMock.name);
     }).rejects.toThrowError(error);
   });
 
